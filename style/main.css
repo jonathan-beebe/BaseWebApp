@@ -1,0 +1,34 @@
+body {
+  margin: 0 auto;
+  width: 700px;
+  background: #ccc;
+}
+#wrapper {
+  border: 1px solid #999;
+  height: auto;
+  width: 700px;
+}
+.row {
+  width: 700px;
+  border: 1px solid black;
+}
+.column {
+  float: left;
+  margin: 0 20px 0 0;
+  background: #eee;
+}
+.column.full {
+  width: 700px;
+}
+.column.med {
+  width: 500px;
+}
+.column.sml {
+  width: 80px;
+}
+.column.last, .column.full {
+  margin-right: 0;
+}
+.clear {
+  clear: both;
+}

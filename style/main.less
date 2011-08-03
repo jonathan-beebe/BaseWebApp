@@ -1,0 +1,35 @@
+@full: 700px;
+@med: 500px;
+@sml: 80px;
+
+html, body { }
+body {
+	margin: 0 auto;
+	width: @full;
+	background: #ccc;
+}
+
+#wrapper {
+	border: 1px solid #999;
+	height: auto;
+	width: @full;
+}
+
+.row {
+	width: @full;
+	border: 1px solid black;
+}
+
+.column {
+	float: left;
+	margin: 0 20px 0 0;
+	background: #eee;
+}
+
+.column.full { width: @full; }
+.column.med { width: @med; }
+.column.sml { width: @sml; }
+.column.last, 
+.column.full { margin-right: 0; }
+
+.clear { clear: both; }
