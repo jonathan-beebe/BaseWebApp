@@ -19,15 +19,4 @@ TestModel = new Class({
     Text: ''
   },
 
-  initialize: function(params) {
-
-    // Do the parent thing...this will merge fields with model base
-    this.parent(params);
-
-    // Create all the validators for fields with rules
-    this.prepareValidators(this.fields, this.rules);
-    //this.validateProperties(params);
-
-  },
-
 });

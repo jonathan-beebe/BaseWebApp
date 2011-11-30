@@ -2,6 +2,7 @@ goog.provide('Application');
 goog.provide('Application.Test');
 goog.require('mootools.extras');
 goog.require('TestModel');
+goog.require('Campaign');
 
 Application = function() {};
 
@@ -23,6 +24,25 @@ Application.Test = new Class({
   },
 
   test: function() {
+
+    console.log('*** Begin Campaign');
+
+    var c = new Campaign({
+      Name: 'Monkeys',
+      Budget: 100
+    });
+
+    c.set('Status', true);
+
+    console.log('status should == "ACTIVE": ', c.get('Status'));
+
+    console.log('campaign: ', c, 'fields: ', c.getFields());
+
+    this.c = c;
+
+    console.log('*** End Campaign');
+    return;
+
     console.log('Begin');
     console.log('changes', this.model.getChanges());
     console.log('errors', this.model.hasErrors());

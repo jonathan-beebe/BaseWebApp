@@ -11,7 +11,7 @@ Application.Main = new Class({
   run: function() {
     // TODO: init the application here...
   }
-  
+
 });
 
 window.addEvent('domready', function() {

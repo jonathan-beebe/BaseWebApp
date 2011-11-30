@@ -10,11 +10,16 @@ goog.require('String.extras');
 
 /**
  * Base Model class.
+ * Provides the basic features needed by data model objects.
+ * Extend this class to create a model specific to your data needs.
+ * Most likely you'll want to extend from {@see VModel} where you'll find
+ * more advanced features for models requiring validation.
  */
 Model = new Class({
 
   Implements: [Events],
 
+  /** @private Track if this model is in a changed state */
   _changed: false,
 
   /**
@@ -36,6 +41,7 @@ Model = new Class({
    *   else
    *     // return get value
    * }
+   * </code>
    * @type {object}
    */
   fields: {},
@@ -46,6 +52,10 @@ Model = new Class({
    */
   originals: {},
 
+  /**
+   * Constructor for class.
+   * @param {object} params Init params.
+   */
   initialize: function(params) {
     // I borrowed this next line from Mootools Core Options class.
     // Using this.fields directly results in an object with all the properties
@@ -53,6 +63,10 @@ Model = new Class({
     // This line copies the values of the child class's `field` property.
     var fields = this.fields = Object.merge.apply(null, [{}, this.fields, params]);
     console.log('this.fields: ', this.fields);
+
+    // We want to establish the original state of this object.
+    // If you need to override this behavior, such as setting some properties
+    // after constructions, just call the {@see establishOriginals} method again.
     this.establishOriginals();
   },
 
@@ -135,6 +149,7 @@ Model = new Class({
   },
 
   set: function(key, value) {
+    console.log('setting', key, value);
     // If we have a custom setter for this property, use it.
     if(typeOf(this['set' + key.ucfirst()]) === 'function') {
       this['set' + key.ucfirst()].apply(this, [value]);
