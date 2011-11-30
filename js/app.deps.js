@@ -5,8 +5,8 @@ goog.addDependency('../../../../js/Application/Errors/LengthError.js', ['LengthE
 goog.addDependency('../../../../js/Application/Models/Campaign.class.js', ['Campaign'], ['VModel']);
 goog.addDependency('../../../../js/Application/Models/Model.js', ['Model'], ['String.extras']);
 goog.addDependency('../../../../js/Application/Models/TestModel.class.js', ['TestModel'], ['VModel']);
+goog.addDependency('../../../../js/Application/Models/VModel.class.js', ['VModel'], ['LengthError', 'Model', 'VProperty']);
 goog.addDependency('../../../../js/Application/Models/VProperty.class.js', ['VProperty'], []);
-goog.addDependency('../../../../js/Application/Models/Validating.js', ['VModel'], ['LengthError', 'Model', 'VProperty']);
 goog.addDependency('../../../../js/Application/main.js', ['Application', 'Application.Main'], ['mootools.extras']);
 goog.addDependency('../../../../js/Application/test.js', ['Application', 'Application.Test'], ['Campaign', 'TestModel', 'mootools.extras']);
 goog.addDependency('../../../../js/lib/mootools/classes/VariableBinding.js', ['VariableBinding'], []);
