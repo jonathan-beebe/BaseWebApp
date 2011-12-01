@@ -17,10 +17,14 @@ goog.require('String.extras');
  */
 Model = new Class({
 
-  Implements: [Events],
+  Implements: [Events, Options],
 
   /** @private Track if this model is in a changed state */
   _changed: false,
+
+  options: {
+    saveUrl: ''
+  },
 
   /**
    * Key->Value data for this model.
@@ -56,7 +60,10 @@ Model = new Class({
    * Constructor for class.
    * @param {object} params Init params.
    */
-  initialize: function(params) {
+  initialize: function(params, options) {
+
+    this.setOptions(options);
+
     // I borrowed this next line from Mootools Core Options class.
     // Using this.fields directly results in an object with all the properties
     // set on the __proto__ but not on the actual object.
@@ -180,6 +187,80 @@ Model = new Class({
     this.fireEvent('change:' + key, [this, value]);
 
     return this;
+  },
+
+  /**
+   * Get the data for saving model.
+   * Child classes should override this as needed. The object returned will
+   * become the `data` property of the Request.
+   * @return {object} The data object.
+   */
+  getDataForSaving: function() {
+    return {
+      model: this.getFields();
+    };
+  },
+
+  /**
+   * Save the model to the server via ajax.
+   *
+   * @param {boolean} force Force a save even when model has no changes?
+   */
+  save: function(force) {
+
+    if(!this.hasChanges() || force !== true) { return; }
+
+    if(this.options.saveUrl !== '') {
+
+      var self = this;
+      var req = new Request.JSON({
+        url: this.options.saveUrl,
+        data: getDataForSaving(),
+        onSuccess: function(json) {
+          self.onSaveComplete(json);
+          self.onAfterSave();
+        },
+        onError: function() {
+          self.onSaveError();
+        }
+      });
+
+      if(self.onBeforeSave()) {
+        req.send();
+      }
+    }
+  },
+
+  /**
+   * Do any work necessary before saving.
+   *
+   * Event listeners can stop the save action by setting the result.stop
+   * property to true;
+   *
+   * @return {boolean} True to continue saving, false to cancel saving.
+   */
+  onBeforeSave: function() {
+    var result = {
+      stop: false
+    };
+    self.fireEvent('beforesave', [this, result]);
+
+    // TODO: perform any before-save work here.
+
+    return !result.stop;
+  },
+
+  onAfterSave: function() {
+    self.fireEvent('save', this);
+    // TODO: perform any after-save work here.
+  },
+
+  onSaveComplete: function(result) {
+    // TODO: respond to successful save.
+  },
+
+  onSaveError: function() {
+    // TODO: respond to failed save.
   }
 
 });
